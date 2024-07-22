@@ -29,6 +29,12 @@ def get_earthquake(id):
         return earthquake.to_dict(), 200
     else:
         return {'message': f'Earthquake {id} not found.'}, 404
+    
+@app.route('/earthquakes/magnitude/<float:magnitude>')
+def get_earthquakes_by_magnitude(magnitude):
+    earthquakes = Earthquake.query.filter(Earthquake.magnitude >= magnitude).all()
+    return {'count': len(earthquakes), 'quakes': [earthquakes.to_dict() for earthquakes in earthquakes]}, 200
+    
 
 
 
