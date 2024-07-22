@@ -22,6 +22,16 @@ def index():
 
 # Add views here
 
+@app.route('/earthquakes/<int:id>')
+def get_earthquake(id):
+    earthquake = Earthquake.query.filter(Earthquake.id == id).first()
+    if earthquake:
+        return earthquake.to_dict(), 200
+    else:
+        return {'message': f'Earthquake {id} not found.'}, 404
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
